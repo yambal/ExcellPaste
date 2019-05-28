@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+            }
+            table td,
+            table th {
+                border: solid 1px black;
+                min-width: 5em;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>-</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                </tr>
+            </thead>
+            <tbody id="to">
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">paste</td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            const e = document.querySelector('#to')
+            e.addEventListener("paste", (event) => {
+                let parsedHtml = ""
+
+                var data = event.clipboardData.getData('Text');
+                var rows = data.split('\n')
+                rows.map((row, index)=>{
+                    var cols = row.split('\t')
+                    parsedHtml += "<tr><td>" + index + "</td><td>" + cols.join("</td><td>") + "</td></tr>"
+                })
+                console.log(parsedHtml)
+                e.innerHTML = "<table>" + parsedHtml + "</table>"
+            })
+        </script>
+    </body>
+</html>
